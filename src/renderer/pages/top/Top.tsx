@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 import { HomeState } from 'renderer/pages/home/Home';
 import { ProjectCard } from 'renderer/pages/top/components/ProjectCard';
 import SettingsIcon from '@mui/icons-material/Settings';
-import packageJson from '../../../../../hugo-text-editor/package.json';
 import { pickRandomEmoji } from '../../util';
 
 const BottomButton = styled(IconButton)({
@@ -71,9 +70,7 @@ export const Top: React.FC = () => {
               <Typography sx={{ fontWeight: 'bold' }}>
                 Hugo Text Writer
               </Typography>
-              <Typography variant="caption">
-                version {packageJson.version}
-              </Typography>
+              <Typography variant="caption">version 0.0.2</Typography>
             </Grid>
           </Grid>
           <Button
