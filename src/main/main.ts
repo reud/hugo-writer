@@ -12,8 +12,18 @@ import path from 'path';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import Store from 'electron-store';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import {
+  openArticleFolder,
+  openArticleTemplateFile,
+  openDiaryFolder,
+  openDiaryTemplateFile,
+  openFolder,
+  openProject,
+} from './fileio/file';
+import { expressStartApp, FileServerConfig } from './server/server';
 
 class AppUpdater {
   constructor() {
@@ -22,6 +32,9 @@ class AppUpdater {
     autoUpdater.checkForUpdatesAndNotify();
   }
 }
+
+// https://issuehunt.io/r/sindresorhus/electron-store/issues/212
+Store.initRenderer();
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -43,6 +56,7 @@ if (isDebug) {
   require('electron-debug')();
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const installExtensions = async () => {
   const installer = require('electron-devtools-installer');
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
@@ -57,10 +71,6 @@ const installExtensions = async () => {
 };
 
 const createWindow = async () => {
-  if (isDebug) {
-    await installExtensions();
-  }
-
   const RESOURCES_PATH = app.isPackaged
     ? path.join(process.resourcesPath, 'assets')
     : path.join(__dirname, '../../assets');
@@ -71,10 +81,16 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 1200,
+    height: 600,
     icon: getAssetPath('icon.png'),
     webPreferences: {
+      devTools: true,
+      webSecurity: false,
+      nodeIntegration: false,
+      contextIsolation: true,
+      nodeIntegrationInWorker: false,
+      nodeIntegrationInSubFrames: false,
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
@@ -82,6 +98,12 @@ const createWindow = async () => {
   });
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
+  mainWindow.webContents.on('did-frame-finish-load', async () => {
+    if (isDebug) {
+      mainWindow!.webContents.openDevTools();
+      // await installExtensions();
+    }
+  });
 
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
@@ -124,12 +146,52 @@ app.on('window-all-closed', () => {
   }
 });
 
+/**
+ * ipcMain Events
+ */
+
+// dialog open系はipc経由じゃないと動かない
+ipcMain.handle('openFolder', async (_ev, arg) => {
+  return openFolder(arg[0]);
+});
+// dialog open系はipc経由じゃないと動かない
+ipcMain.handle('openProject', async () => {
+  return openProject();
+});
+
+ipcMain.handle('openDiaryFolder', async (_ev, arg) => {
+  return openDiaryFolder(arg[0]);
+});
+
+ipcMain.handle('openArticleFolder', async (_ev, arg) => {
+  return openArticleFolder(arg[0]);
+});
+
+ipcMain.handle('openDiaryTemplateFile', async (_ev, arg) => {
+  return openDiaryTemplateFile(arg[0]);
+});
+
+ipcMain.handle('openArticleTemplateFile', async (_ev, arg) => {
+  return openArticleTemplateFile(arg[0]);
+});
+
+ipcMain.handle('FileServerConfig', async () => {
+  return FileServerConfig.getInstance();
+});
+
+ipcMain.handle('FileServerConfigsSetCwd', async (_ev, arg) => {
+  // eslint-disable-next-line prefer-destructuring
+  FileServerConfig.getInstance().cwd = arg;
+});
+
+expressStartApp();
+
 app
   .whenReady()
   .then(() => {
     createWindow();
-    app.on('activate', () => {
-      // On macOS it's common to re-create a window in the app when the
+    app.on('activate', async () => {
+      // On macOS, it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
       if (mainWindow === null) createWindow();
     });
