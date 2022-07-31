@@ -1,5 +1,6 @@
 {
   "description": "Markdown Editor For Hugo Contents",
+  "version": "0.0.2",
   "keywords": [
     "electron",
     "react",
@@ -30,6 +31,7 @@
     "postinstall": "ts-node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.renderer.dev.dll.ts",
     "lint": "cross-env NODE_ENV=development eslint . --ext .js,.jsx,.ts,.tsx",
     "package": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish never",
+    "deploy": "ts-node ./.erb/scripts/clean.js dist && npm run build && electron-builder build --publish always",
     "prepare": "husky install",
     "rebuild": "electron-rebuild --parallel --types prod,dev,optional --module-dir release/app",
     "start": "ts-node ./.erb/scripts/check-port-in-use.js && npm run start:renderer",
@@ -189,8 +191,8 @@
     "webpack-merge": "^5.8.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "Hugo-Writer",
+    "appId": "net.reud.hugo-writer",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -248,8 +250,8 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
+      "owner": "reud",
+      "repo": "hugo-writer"
     }
   },
   "collective": {
