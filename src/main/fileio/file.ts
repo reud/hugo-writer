@@ -35,13 +35,21 @@ export const frontMatterSeparate = (frontMatterMarkdown: string) => {
   return frontMatterParsed;
 };
 
-export const frontMatterMerge = (attributes: FrontMatter, body: string) => {
+export const frontMatterMerge = (
+  attributes: FrontMatter,
+  body: string,
+  customString: string[],
+  customParam: Record<string, any>
+) => {
   const mdTemplate = `---
-<FRONT_MATTER>---
+<FRONT_MATTER><CUSTOM_STRING>
+---
 <BODY>
 `;
-  const frontMatter = yaml.stringify(attributes);
+  const merged = { ...attributes, ...customParam };
+  const frontMatter = yaml.stringify(merged);
   let result = mdTemplate.replace('<FRONT_MATTER>', frontMatter);
+  result = result.replace('<CUSTOM_STRING>', customString.join('\n'));
   result = result.replace('<BODY>', body);
   return result;
 };
@@ -77,7 +85,7 @@ export const readFileAndParse = (
     title: attributes.title || '',
     datetime: attributes.date || '',
     author: attributes.author || '',
-    category: attributes.categories || '',
+    category: attributes.categories || ['something'],
     contentStr: body,
     path: contentSelectionPath,
     folderName,

@@ -23,6 +23,8 @@ const replaceSpecialItems = (obj: any) => {
   // eslint-disable-next-line @typescript-eslint/ban-types
   const ret: { [s: string]: string } = { ...(obj as {}) };
   keys.forEach((k: string) => {
+    // skip string[] variable
+    if (k === 'category') return;
     ret[k] = ret[k].replaceAll(
       '<TODAY_DATETIME>',
       today.format('YYYY-MM-DDTHH:mm:00+09:00')

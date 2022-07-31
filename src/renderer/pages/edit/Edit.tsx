@@ -78,10 +78,25 @@ const Edit: React.FC = () => {
           libraries: ['mathjax'],
           draft: sharedState.draft,
         };
+        const customFrontMatterValues = window.electron.storeGet(
+          state.projectPath,
+          'customFrontMatterValues'
+        );
+        const customSchema = window.electron.storeGet(
+          state.projectPath,
+          'customSchema'
+        );
+        const record = customSchema.reduce((prev, val, _idx) => {
+          // @ts-ignore
+          prev[val.name] = val.default;
+          return prev;
+        }, {});
         // front matterが付いたmdを作成
         const merged = window.electron.frontMatterMerge(
           frontMatter,
-          sharedState.contentStr
+          sharedState.contentStr,
+          customFrontMatterValues,
+          record as Record<string, any>
         );
         console.log(merged);
         // 保存

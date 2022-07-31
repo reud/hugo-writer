@@ -2,7 +2,7 @@ export interface WritingDataSettings {
   title: string;
   datetime: string;
   author: string;
-  category: string;
+  category: string[];
   contentStr: string;
   path: string; // ex: content/article/
   folderName: string; // ex: 20220615
@@ -38,7 +38,7 @@ export interface FrontMatter {
   title: string;
   date: string;
   author: string;
-  categories: string;
+  categories: string[];
   libraries: Array<string>;
   draft: boolean;
 }

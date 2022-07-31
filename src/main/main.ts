@@ -57,6 +57,7 @@ if (isDebug) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+// @ts-ignore
 const installExtensions = async () => {
   const installer = require('electron-devtools-installer');
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;

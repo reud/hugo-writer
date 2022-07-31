@@ -106,8 +106,13 @@ contextBridge.exposeInMainWorld('electron', {
     recentlyOpenFiles = recentlyOpenFiles.slice(-10);
     store.set({ recentlyOpenFiles });
   },
-  frontMatterMerge: (attributes: FrontMatter, body: string) => {
-    return frontMatterMerge(attributes, body);
+  frontMatterMerge: (
+    attributes: FrontMatter,
+    body: string,
+    customString: string[],
+    customParam: Record<string, any>
+  ) => {
+    return frontMatterMerge(attributes, body, customString, customParam);
   },
   storeSet: (projectPath: string, kv: Partial<ProjectConfigInterface>) => {
     const store = openProjectConfigFile(projectPath);

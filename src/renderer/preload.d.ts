@@ -29,7 +29,12 @@ declare global {
         statement: string
       ) => SaveInterface;
       pushRecentlyData: (projectPath: string, p: string) => void;
-      frontMatterMerge: (attributes: FrontMatter, body: string) => string;
+      frontMatterMerge: (
+        attributes: FrontMatter,
+        body: string,
+        customString: string[],
+        customParam: Record<string, any>
+      ) => string;
       storeSet: (
         projectPath: string,
         kv: Partial<ProjectConfigInterface>

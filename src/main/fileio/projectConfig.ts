@@ -29,8 +29,8 @@ const articleSchema: Schema<GenreInterface> = {
     default: 'Anonymous',
   },
   category: {
-    type: 'string',
-    default: 'article',
+    type: 'array',
+    default: ['article'],
   },
   folderName: {
     type: 'string',
@@ -56,8 +56,8 @@ const diarySchema: Schema<GenreInterface> = {
     default: 'Anonymous',
   },
   category: {
-    type: 'string',
-    default: 'diary',
+    type: 'array',
+    default: ['diary'],
   },
   folderName: {
     type: 'string',
@@ -105,6 +105,14 @@ const schema: Schema<ProjectConfigInterface> = {
   categories: {
     type: 'array',
     default: [articleSchema.category.default, diarySchema.category.default],
+  },
+  customSchema: {
+    type: 'array',
+    default: [],
+  },
+  customFrontMatterValues: {
+    type: 'array',
+    default: [],
   },
 };
 

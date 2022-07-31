@@ -1,3 +1,15 @@
+export type CustomSchemaAvailableType =
+  | 'bool'
+  | 'string'
+  | 'number'
+  | 'array-string';
+
+export interface CustomSchema {
+  name: string;
+  default: any;
+  type: CustomSchemaAvailableType;
+}
+
 export interface ProjectConfigInterface {
   diary: GenreInterface | null;
   article: GenreInterface | null;
@@ -5,6 +17,8 @@ export interface ProjectConfigInterface {
   authors: string[];
   categories: string[];
   recentlyOpenFiles: string[];
+  customFrontMatterValues: string[];
+  customSchema: CustomSchema[];
 }
 
 export interface GenreInterface {
@@ -12,7 +26,7 @@ export interface GenreInterface {
   title: string;
   datetime: string;
   author: string;
-  category: string;
+  category: string[];
   folderName: string;
 }
 

@@ -14,8 +14,8 @@ import InputLabel from '@mui/material/InputLabel';
 import { MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import dayjs from 'dayjs';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import { LocalizationProvider } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { WritingData } from '../../../structure';
 
 interface Shared {
@@ -41,7 +41,7 @@ export const LeftDrawer: React.FC<Shared> = ({
     sharedState.author
   );
   const [selectedCategoryState, setSelectedCategoryState] =
-    React.useState<string>(sharedState.category);
+    React.useState<string>(sharedState.category[0]);
 
   const handleDateTimeState = (newValue: Date | null) => {
     setDateTimeState(newValue);
@@ -64,7 +64,7 @@ export const LeftDrawer: React.FC<Shared> = ({
     console.log(ds);
     setSharedState({
       author: selectedAuthorState,
-      category: selectedCategoryState,
+      category: [selectedCategoryState],
       datetime: ds.format('YYYY-MM-DDTHH:mm:00+09:00'),
       draft: draftState,
       folderName: sharedState.folderName,
@@ -139,7 +139,7 @@ export const LeftDrawer: React.FC<Shared> = ({
               value={selectedCategoryState}
               label="category"
               onChange={handleSelectCategoryChange}
-              defaultValue={defaultCategory}
+              defaultValue={defaultCategory[0]}
             >
               {categories.map((category) => {
                 return (

@@ -103,6 +103,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.92",
     "@mui/material": "^5.9.2",
+    "@mui/x-date-pickers": "^5.0.0-beta.3",
     "@types/encoding-japanese": "^2.0.0",
     "bootstrap": "^5.2.0",
     "dayjs": "^1.11.4",
