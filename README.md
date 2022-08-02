@@ -14,3 +14,10 @@ I developed Hugo to make it possible to write like a Hatena blog.
 - Paste image from clipboard
 - Terminal available while writing articles
 - Support for multiple Hugo sites
+
+# Developing
+
+## Release
+
+- modify release/app/package.json(**NOT** <project root>/package.json )
+- GitHub Actions will handle the release automatically
