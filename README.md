@@ -1,7 +1,7 @@
-Hugo-Witer **WIP**
+Hugo-Writer (WIP)
 ===
 
-![logo](https://github.com/reud/hugo-writer/blob/v0.1.0/assets/icon.png?raw=true)
+![logo](https://github.com/reud/hugo-writer/blob/main/assets/icon.png?raw=true)
 
 Logo Image Created By [Midjourney](https://www.midjourney.com/home/)
 

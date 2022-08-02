@@ -1,6 +1,6 @@
 {
   "description": "Markdown Editor For Hugo Contents",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "keywords": [
     "electron",
     "react",
@@ -209,6 +209,7 @@
           "x64"
         ]
       },
+      "icon": "assets/icon.png",
       "type": "distribution",
       "hardenedRuntime": true,
       "entitlements": "assets/entitlements.mac.plist",
@@ -232,13 +233,15 @@
     "win": {
       "target": [
         "nsis"
-      ]
+      ],
+      "icon": "assets/icon.png"
     },
     "linux": {
       "target": [
         "AppImage"
       ],
-      "category": "Development"
+      "category": "Development",
+      "icon": "assets/icon.png"
     },
     "directories": {
       "app": "release/app",
