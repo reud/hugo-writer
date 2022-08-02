@@ -13,6 +13,7 @@ import { HomeState } from 'renderer/pages/home/Home';
 import { ProjectCard } from 'renderer/pages/top/components/ProjectCard';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { pickRandomEmoji } from '../../util';
+import packageJson from '../../../../package.json';
 
 const BottomButton = styled(IconButton)({
   bottom: 1.0,
@@ -70,7 +71,9 @@ export const Top: React.FC = () => {
               <Typography sx={{ fontWeight: 'bold' }}>
                 Hugo Text Writer
               </Typography>
-              <Typography variant="caption">version 0.0.2</Typography>
+              <Typography variant="caption">
+                version {packageJson.version}
+              </Typography>
             </Grid>
           </Grid>
           <Button
